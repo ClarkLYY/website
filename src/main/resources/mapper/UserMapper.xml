@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clarklyy.website.repository.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.clarklyy.website.domain.entity.User">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="acti_status" jdbcType="INTEGER" property="actiStatus" />
+    <result column="acti_code" jdbcType="VARCHAR" property="actiCode" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="token_exptime" jdbcType="TIMESTAMP" property="tokenExptime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_nickname, user_password, user_email, acti_status, acti_code, salt, 
+    token_exptime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from table_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.User"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into table_user (user_id, user_nickname, user_password, 
+      user_email, acti_code,
+      salt )
+    values (#{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{actiCode,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.clarklyy.website.domain.entity.User">
+    insert into table_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userNickname != null">
+        user_nickname,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="userEmail != null">
+        user_email,
+      </if>
+      <if test="actiStatus != null">
+        acti_status,
+      </if>
+      <if test="actiCode != null">
+        acti_code,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="tokenExptime != null">
+        token_exptime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userNickname != null">
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="actiStatus != null">
+        #{actiStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actiCode != null">
+        #{actiCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExptime != null">
+        #{tokenExptime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clarklyy.website.domain.entity.User">
+    update table_user
+    <set>
+      <if test="userNickname != null">
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="actiStatus != null">
+        acti_status = #{actiStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actiCode != null">
+        acti_code = #{actiCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExptime != null">
+        token_exptime = #{tokenExptime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clarklyy.website.domain.entity.User">
+    update table_user
+    set user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      acti_status = #{actiStatus,jdbcType=INTEGER},
+      acti_code = #{actiCode,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      token_exptime = #{tokenExptime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
