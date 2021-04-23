@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String registerUser(User user) {
         userMapper.insert(user);
+        System.out.println(user.getUserId());
         return null;
     }
 
@@ -31,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User encryptedPassword(User user) {
         String salt = UUID.randomUUID().toString();
-        System.out.println(salt);
         Md5Hash md5Hash = new Md5Hash(user.getUserPassword(), salt, 2);
         user.setUserPassword(md5Hash.toString());
         user.setSalt(salt);
@@ -41,8 +41,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public String verifyRegister(Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);
+        if(System.currentTimeMillis()-user.getTokenExptime().getTime()>86400000){
+            userMapper.deleteByPrimaryKey(userId);
+            return "链接已失效";
+        }
         user.setActiStatus(1);
         userMapper.updateByPrimaryKey(user);
+        return "success!";
+    }
+
+    @Override
+    public User getUserByUserEmail(String userEmail) {
+        User user = userMapper.selectByUserEmail(userEmail);
         return null;
     }
 

@@ -31,4 +31,11 @@ public interface UserService {
      * @return String
      */
     String verifyRegister(Integer userId);
+
+    /**
+     * 根据邮箱返回用户
+     * @param userEmail
+     * @return String
+     */
+    User getUserByUserEmail(String userEmail);
 }

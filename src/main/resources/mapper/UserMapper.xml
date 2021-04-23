@@ -21,12 +21,17 @@
     from table_user
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_user
+    where user_email = #{userEmail,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from table_user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.User"
-          useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="com.clarklyy.website.domain.entity.User">
     insert into table_user (user_id, user_nickname, user_password, 
       user_email, acti_code,
       salt )
