@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User encryptedPassword(User user) {
         String salt = UUID.randomUUID().toString();
-        Md5Hash md5Hash = new Md5Hash(user.getUserPassword(), salt, 2);
+        Md5Hash md5Hash = new Md5Hash(user.getUserPassword());
         user.setUserPassword(md5Hash.toString());
         user.setSalt(salt);
         return user;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setActiStatus(1);
         userMapper.updateByPrimaryKey(user);
-        return "success!";
+        return "注册成功!";
     }
 
     @Override

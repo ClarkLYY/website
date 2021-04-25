@@ -10,7 +10,7 @@ public class Result implements Serializable {
     private String msg;
     private Object data;
 
-    public static Result success(int code, String msg, Object data){
+    public static Result result(int code, String msg, Object data){
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
@@ -19,6 +19,15 @@ public class Result implements Serializable {
     }
 
     public static Result success(Object data){
-        return success(200, "操作成功", data);
+        return result(200, "操作成功", data);
+    }
+
+    public static Result success(String msg){
+        return result(200, msg, null);
+    }
+
+    public static Result fail(String msg){
+        String data="";
+        return result(400, msg, data);
     }
 }
