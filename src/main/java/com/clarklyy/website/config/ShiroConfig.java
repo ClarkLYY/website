@@ -38,6 +38,7 @@ public class ShiroConfig {
 
         //登录注册不拦截
         map.put("/user/register","anon");
+        map.put("/user/verify","anon");
         map.put("/user/login","anon");
         //登出
         map.put("/logout","logout");

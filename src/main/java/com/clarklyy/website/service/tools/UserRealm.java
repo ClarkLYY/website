@@ -45,9 +45,11 @@ public class UserRealm extends AuthorizingRealm {
         }
 
         if (user==null){
-            throw new AccountException("用户不存在");
+            throw new UnknownAccountException("用户不存在");
         }
-
+        if (user.getActiStatus()==0){
+            throw new AccountException("该邮箱未确认注册！");
+        }
         //返回构建好的AuthInfo，第一个参数为用户主体，第二个为用户密码，第三个getName()即可
         return new SimpleAuthenticationInfo(user,user.getUserPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
     }

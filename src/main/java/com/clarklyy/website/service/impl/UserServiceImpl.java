@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserEmail(String userEmail) {
         User user = userMapper.selectByUserEmail(userEmail);
-        return null;
+        return user;
     }
 
 

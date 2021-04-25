@@ -4,6 +4,7 @@ import com.clarklyy.website.domain.entity.User;
 import com.clarklyy.website.service.SendEmail;
 import com.clarklyy.website.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -28,6 +29,9 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@RequestBody User user) throws MessagingException {
+        if (userService.getUserByUserEmail(user.getUserEmail())!=null){
+            return "该邮箱已被注册！";
+        }
         userService.encryptedPassword(user);
         userService.registerUser(user);
         sendEmail.sendEmail(user);
@@ -35,7 +39,10 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
-    public User getUser(@RequestParam(value = "userId") Integer userId){
+    public Object getUser(@RequestParam(value = "userId") Integer userId){
+        if (userService.getUser(userId)==null){
+            return "该用户id不存在！";
+        }
         return userService.getUser(userId);
     }
 
@@ -52,12 +59,14 @@ public class UserController {
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException ice) {
-            return "password error!";
+            return "用户名或密码错误！";
         } catch (UnknownAccountException uae) {
-            return "username error!";
+            return "用户名或密码错误!";
+        }catch (AccountException ae) {
+            return "该邮箱未确认注册";
         }
         User user = userService.getUserByUserEmail(userEmail);
-//        subject.getSession().setAttribute("user", user);
+        subject.getSession().setAttribute("user", user);
         return "SUCCESS";
     }
 
