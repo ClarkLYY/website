@@ -101,10 +101,13 @@ public class UserController {
         return Result.success("登录成功");
     }
 
-    @RequiresAuthentication
     @GetMapping("/logout")
     public Result logout(){
         SecurityUtils.getSubject().logout();
+        if (!SecurityUtils.getSubject().isAuthenticated()){
+            System.out.println("怎么还在啊");
+        }
+        System.out.println(SecurityUtils.getSubject());
         return Result.success("成功退出");
     }
 }

@@ -26,6 +26,6 @@ management:
 
 clark:
   jwt:
-    secret: abcdefgasdfsadf
+    secret: 12312414123123
     expire: 604800
     header: Authorization

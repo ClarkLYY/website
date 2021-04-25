@@ -39,11 +39,14 @@ public class JwtFilter extends AuthenticatingFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+
         String jwt = request.getHeader("Authorization");
         if (StringUtils.isEmpty(jwt)){
+            System.out.println("create token4");
             return true;
         }
         //校验jwt
+        System.out.println(jwt);
         Claims claims = jwtUtils.getClaimsByToken(jwt);
         if (claims == null || jwtUtils.isTokenExpired(claims.getExpiration())){
             throw new ExpiredCredentialsException("token已失效，请重新登录");
@@ -57,6 +60,7 @@ public class JwtFilter extends AuthenticatingFilter {
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+        System.out.println("create token3");
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-control-Allow-Methods", "GET, POST, HEAD, PUT, DELETE, OPTIONS");
         httpServletResponse.setHeader("Access-control-Allow-Headers", httpServletRequest.getHeader("Access-control-Request-Headers"));
