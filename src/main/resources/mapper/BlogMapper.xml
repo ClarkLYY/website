@@ -136,6 +136,6 @@
     ,
     <include refid="Blob_Column_List" />
     from table_blog
-    order by created desc limit #{PageNo}, #{PageSize}
+    order by created desc limit #{pageNo}, #{pageSize}
   </select>
 </mapper>

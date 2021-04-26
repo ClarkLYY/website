@@ -28,12 +28,24 @@ public class BlogController {
         return Result.success(list);
     }
 
+    @GetMapping("/blog/{id}")
+    public Result blog(@PathVariable Integer id){
+        Blog blog = blogService.selectBlogById(id);
+        if(blog == null){
+            return Result.fail("Blog 不存在!");
+        }
+        return Result.success(blog);
+    }
+
     @PostMapping("/blog/edit")
     public Result edit(@Validated @RequestBody Blog blog){
         Blog temp = null;
         //有id就编辑，没id就新建
         if(blog.getId() != null){
             temp = blogService.selectBlogById(blog.getId());
+            if(temp==null){
+                return Result.fail("Blog 不存在!");
+            }
 //            Assert.isTrue(temp.getUserId().intValue() == ShiroUtil.getProfile().getId().intValue(), "没有编辑权限");
         }else{
             temp = new Blog();

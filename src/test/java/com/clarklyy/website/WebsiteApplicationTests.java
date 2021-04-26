@@ -41,7 +41,7 @@ class WebsiteApplicationTests {
 
     @Test
     void selectByPageTest(){
-        List<Blog> list = blogService.selectBlogByPage(0,2);
+        List<Blog> list = blogService.selectBlogByPage(2,2);
         for (int i = 0;i<list.size();i++){
             System.out.println(list.get(i).getId());
         }
