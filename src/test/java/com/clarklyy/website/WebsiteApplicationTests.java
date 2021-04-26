@@ -1,18 +1,24 @@
 package com.clarklyy.website;
 
+import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.domain.entity.User;
+import com.clarklyy.website.repository.mapper.BlogMapper;
 import com.clarklyy.website.repository.mapper.UserMapper;
 import com.clarklyy.website.service.tools.JwtFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @SpringBootTest
 class WebsiteApplicationTests {
 
     @Resource
     UserMapper userMapper;
+
+    @Resource
+    BlogMapper blogMapper;
 
     @Test
     void contextLoads() {
@@ -27,5 +33,13 @@ class WebsiteApplicationTests {
     @Test
     void jwtFilterTest(){
         JwtFilter jwtFilter = new JwtFilter();
+    }
+
+    @Test
+    void selectByPageTest(){
+        List<Blog> list = blogMapper.selectByPage(4,2);
+        for (int i = 0;i<list.size();i++){
+            System.out.println(list.get(i).getId());
+        }
     }
 }
