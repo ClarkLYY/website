@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User encryptedPassword(User user) {
         String salt = UUID.randomUUID().toString();
-        Md5Hash md5Hash = new Md5Hash(user.getUserPassword());
+        Md5Hash md5Hash = new Md5Hash(user.getUserPassword(), salt, 2);
         user.setUserPassword(md5Hash.toString());
         user.setSalt(salt);
         return user;

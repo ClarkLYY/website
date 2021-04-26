@@ -3,6 +3,7 @@ package com.clarklyy.website.common.exception;
 import com.clarklyy.website.common.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -17,16 +18,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionhandler {
 
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = ShiroException.class)
-    public Result hander(RuntimeException e){
+    @ExceptionHandler(value = RuntimeException.class)
+    public Result runtime(RuntimeException e){
         log.error("运行时异常:----------------",e);
         return Result.fail(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Result hander(MethodArgumentNotValidException e){
+    public Result valid(MethodArgumentNotValidException e){
         log.error("实体校验异常:----------------",e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();

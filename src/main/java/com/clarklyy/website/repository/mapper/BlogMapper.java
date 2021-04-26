@@ -1,7 +1,6 @@
 package com.clarklyy.website.repository.mapper;
 
 import com.clarklyy.website.domain.entity.Blog;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +19,5 @@ public interface BlogMapper {
 
     int updateByPrimaryKey(Blog record);
 
-    List<Blog> selectByPage(@Param("PageNo") Integer PageNo, @Param("PageSize") Integer PageSize);
+    List<Blog> selectByPage(Integer pageNo, Integer pageSize);
 }

@@ -9,11 +9,9 @@ import com.clarklyy.website.service.SendEmail;
 import com.clarklyy.website.service.UserService;
 import com.clarklyy.website.service.tools.JwtToken;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AccountException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.validation.annotation.Validated;
@@ -32,9 +30,6 @@ public class UserController {
 
     @Resource
     UserService userService;
-
-    @Resource
-    JwtUtils jwtUtils;
 
     @Resource
     SendEmail sendEmail;
@@ -68,20 +63,6 @@ public class UserController {
     @RequiresAuthentication
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginVo loginVo, HttpServletResponse response){
-//        UsernamePasswordToken token = new UsernamePasswordToken(userEmail, userPassword);
-//        Subject subject = SecurityUtils.getSubject();
-//        try {
-//            subject.login(token);
-//        } catch (IncorrectCredentialsException ice) {
-//            return "用户名或密码错误！";
-//        } catch (UnknownAccountException uae) {
-//            return "用户名或密码错误!";
-//        }catch (AccountException ae) {
-//            return "该邮箱未确认注册";
-//        }
-//        User user = userService.getUserByUserEmail(userEmail);
-//        subject.getSession().setAttribute("user", user);
-//        return "SUCCESS";
 
         User user = userService.getUserByUserEmail(loginVo.getUserEmail());
         if(user == null){
@@ -90,22 +71,25 @@ public class UserController {
         if(user.getActiStatus()!=1){
             return Result.fail("邮箱未确认注册！");
         }
-        if(!user.getUserPassword().equals(SecureUtil.md5(loginVo.getUserPassword()))){
+        String salt = user.getSalt();
+        if(!user.getUserPassword().equals(new Md5Hash(loginVo.getUserPassword(), salt, 2).toString())){
             return Result.fail("密码错误!");
         }
         Integer userId = user.getUserId();
-        String jwt = jwtUtils.generateToken(userId);
+        String jwt = new JwtUtils().generateToken(userId);
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-control-Expose-Headers", "Authorization");
 
         return Result.success("登录成功");
     }
 
+    @RequiresAuthentication
     @GetMapping("/logout")
     public Result logout(){
+
         SecurityUtils.getSubject().logout();
-        if (!SecurityUtils.getSubject().isAuthenticated()){
-            System.out.println("怎么还在啊");
+        if (SecurityUtils.getSubject().isAuthenticated()){
+            return Result.fail("退出失败");
         }
         System.out.println(SecurityUtils.getSubject());
         return Result.success("成功退出");

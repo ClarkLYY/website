@@ -12,12 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 @Data
 @Slf4j
-@Component
-@ConfigurationProperties(prefix = "clark.jwt")
 public class JwtUtils {
-    private String secret;
-    private long expire;
-    private String header;
+    private static String secret="12312414123123";
+    private static long expire=604800;
+    private static String header="Authorization";
 
     //生成token
     public String generateToken(int userId){

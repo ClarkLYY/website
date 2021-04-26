@@ -17,8 +17,6 @@ public class UserRealm extends AuthorizingRealm {
     @Resource
     UserMapper userMapper;
 
-    @Resource
-    JwtUtils jwtUtils;
 
     public boolean supports(AuthenticationToken authenticationToken) {
         return authenticationToken instanceof JwtToken;
@@ -38,22 +36,10 @@ public class UserRealm extends AuthorizingRealm {
     //用户认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-//        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-//        String userEmail = token.getPrincipal().toString();//获取用户名
-//        String password = String.valueOf((char[]) token.getCredentials());//获取密码
         JwtToken jwtToken = (JwtToken) authenticationToken;
+        JwtUtils jwtUtils = new JwtUtils();
         String userId = jwtUtils.getClaimsByToken((String) jwtToken.getPrincipal()).getSubject();
         User user = userMapper.selectByPrimaryKey(Integer.valueOf(userId));//获取用户
-//        System.out.println("AuthenticationToken:");
-//        System.out.println("hashCode:" + authenticationToken.hashCode());
-//        System.out.println("Principal:" + authenticationToken.getPrincipal());
-//        System.out.println("Credentials:" + authenticationToken.getCredentials().toString());
-//        System.out.println("host: "+token.getHost());
-//        System.out.print("password: ");
-//        for(char i :token.getPassword()){
-//            System.out.print(i);
-//        }
-
         if (user==null){
             throw new UnknownAccountException("用户不存在");
         }
