@@ -1,6 +1,8 @@
 package com.clarklyy.website.service.tools;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.clarklyy.website.common.utils.JwtUtils;
+import com.clarklyy.website.domain.entity.AccountProfile;
 import com.clarklyy.website.domain.entity.User;
 import com.clarklyy.website.repository.mapper.UserMapper;
 import org.apache.shiro.authc.*;
@@ -44,7 +46,12 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException("用户不存在");
         }
 
+        AccountProfile profile = new AccountProfile();
+
+        profile.setId(user.getUserId());
+        profile.setEmail(user.getUserEmail());
+        profile.setUsername(user.getUserEmail());
 //        //返回构建好的AuthInfo，第一个参数为用户主体，第二个为用户密码，第三个getName()即可
-        return new SimpleAuthenticationInfo(user,jwtToken.getCredentials(), getName());
+        return new SimpleAuthenticationInfo(profile,jwtToken.getCredentials(), getName());
     }
 }

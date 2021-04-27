@@ -1,5 +1,6 @@
 package com.clarklyy.website.controller;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.clarklyy.website.common.result.Result;
 import com.clarklyy.website.common.utils.JwtUtils;
@@ -60,7 +61,6 @@ public class UserController {
         return Result.success(status);
     }
 
-    @RequiresAuthentication
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginVo loginVo, HttpServletResponse response){
 
@@ -80,7 +80,12 @@ public class UserController {
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-control-Expose-Headers", "Authorization");
 
-        return Result.success("登录成功");
+        return Result.success(MapUtil.builder()
+                        .put("id", user.getUserId())
+                        .put("userEmail", user.getUserEmail())
+                        .put("avatar", user.getSalt())
+                        .put("userNickName", user.getUserNickname())
+                        .map());
     }
 
     @RequiresAuthentication

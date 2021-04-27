@@ -130,7 +130,7 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPage" resultType="com.clarklyy.website.domain.entity.Blog" >
+  <select id="selectByPage" resultType="com.clarklyy.website.domain.entity.Blog" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
     ,

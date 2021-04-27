@@ -27,13 +27,14 @@ public class BlogServiceImpl implements BlogService {
         System.out.printf("页码为：%d\n",pageNo);
         System.out.printf("分页大小为：%d\n",pageSize);
 
-        return blogMapper.selectByPage(totalPage, pageSize);
+        List<Blog> list = blogMapper.selectByPage(totalPage, pageSize);
+        return list;
     }
 
     @Override
     public void saveOrUpdate(Blog blog) {
         if(blog.getId()!=null){
-            blogMapper.updateByPrimaryKey(blog);
+            blogMapper.updateByPrimaryKeyWithBLOBs(blog);
         }else{
             blogMapper.insert(blog);
         }

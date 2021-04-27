@@ -4,10 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import com.clarklyy.website.common.result.Result;
 import com.clarklyy.website.common.utils.ShiroUtil;
+import com.clarklyy.website.domain.entity.AccountProfile;
 import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.domain.entity.User;
 import com.clarklyy.website.service.BlogService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,7 @@ public class BlogController {
         return Result.success(blog);
     }
 
+    @RequiresAuthentication
     @PostMapping("/blog/edit")
     public Result edit(@Validated @RequestBody Blog blog){
         Blog temp = null;
@@ -48,6 +51,8 @@ public class BlogController {
             }
 //            Assert.isTrue(temp.getUserId().intValue() == ShiroUtil.getProfile().getId().intValue(), "没有编辑权限");
         }else{
+            System.out.println(ShiroUtil.getProfile().toString());
+            AccountProfile accountProfile = ShiroUtil.getProfile();
             temp = new Blog();
             temp.setUserId(ShiroUtil.getProfile().getId());
             temp.setCreated(new Date());
