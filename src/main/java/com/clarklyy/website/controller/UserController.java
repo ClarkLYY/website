@@ -46,13 +46,12 @@ public class UserController {
         return Result.success("请到邮箱查收确认注册邮件");
     }
 
-    @RequiresAuthentication
     @GetMapping("/getUser")
-    public Object getUser(@RequestParam(value = "userId") Integer userId){
+    public Result getUser(@RequestParam(value = "userId") Integer userId){
         if (userService.getUser(userId)==null){
-            return "该用户id不存在！";
+            return Result.fail("该用户id不存在！");
         }
-        return userService.getUser(userId);
+        return Result.success(userService.getUser(userId));
     }
 
     @GetMapping("/verify")

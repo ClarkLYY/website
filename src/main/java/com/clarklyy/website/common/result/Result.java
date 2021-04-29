@@ -25,6 +25,9 @@ public class Result implements Serializable {
     public static Result success(String msg){
         return result(200, msg, null);
     }
+    public static Result successUploadImg(Object data){
+        return result(200, "上传成功", data);
+    }
 
     public static Result fail(String msg){
         String data="";

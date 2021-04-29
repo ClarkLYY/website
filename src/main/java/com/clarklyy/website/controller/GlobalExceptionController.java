@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.UnsupportedEncodingException;
 
 @RestController
-public class DoExceptionController {
+public class GlobalExceptionController {
 
     @RequestMapping(value = "/unauthorized/{message}")
     public Result unauthorized(@PathVariable String message)throws UnsupportedEncodingException{

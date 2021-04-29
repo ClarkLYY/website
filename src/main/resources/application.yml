@@ -14,7 +14,10 @@ spring:
     password: cdmlsndkcqhrdhfb
 
   mvc:
-    static-path-pattern: "/static/**"
+    static-path-pattern: /**
+
+#  resources:
+#    static-locations: file:/Users/bytedance/IdeaProjects/website/target/image/, classpath:/static/
 
 
 mybatis:
