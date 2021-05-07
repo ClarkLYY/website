@@ -1,16 +1,24 @@
 package com.clarklyy.website.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+@Data
+@Document(indexName = "clark")
 public class Blog {
     private Integer id;
 
     private Integer userId;
 
+    @Field(analyzer = "ikmaxword",type = FieldType.Text)
     private String title;
 
+    @Field(analyzer = "ikmaxword",type = FieldType.Text)
     private String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
@@ -75,4 +83,6 @@ public class Blog {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+
 }

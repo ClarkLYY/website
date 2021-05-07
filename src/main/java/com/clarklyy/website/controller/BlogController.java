@@ -7,6 +7,7 @@ import com.clarklyy.website.common.utils.ShiroUtil;
 import com.clarklyy.website.domain.entity.AccountProfile;
 import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.domain.entity.User;
+import com.clarklyy.website.domain.vo.BlogsVo;
 import com.clarklyy.website.service.BlogService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -25,9 +26,11 @@ public class BlogController {
     BlogService blogService;
 
     @GetMapping("/blogs")
-    public Result blogs(@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo, @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
-        List<Blog> list = blogService.selectBlogByPage(pageNo, pageSize);
-        return Result.success(list);
+    public Result blogs(@RequestParam(defaultValue = "1", value = "pageNo") Integer pageNo, @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
+        BlogsVo blogsVo = new BlogsVo();
+        blogsVo.setList(blogService.selectBlogByPage(pageNo-1, pageSize));
+        blogsVo.setTotal(blogService.selectBlogByPage(0,100000).size());
+        return Result.success(blogsVo);
     }
 
     @GetMapping("/blog/{id}")

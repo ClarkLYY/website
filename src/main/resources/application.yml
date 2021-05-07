@@ -8,6 +8,9 @@ spring:
     username: clark
     password: rootroot
 
+  main:
+    allow-bean-definition-overriding: true
+
   mail:
     host: smtp.qq.com
     username: 2868451714@qq.com
