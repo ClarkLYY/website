@@ -46,6 +46,7 @@ public class UserController {
         return Result.success("请到邮箱查收确认注册邮件");
     }
 
+    @RequiresAuthentication
     @GetMapping("/getUser")
     public Result getUser(@RequestParam(value = "userId") Integer userId){
         if (userService.getUser(userId)==null){
