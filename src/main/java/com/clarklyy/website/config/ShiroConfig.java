@@ -50,6 +50,7 @@ public class ShiroConfig {
 
         //异常不拦截
         map.put("/unauthorized/**","anon");
+        map.put("/swagger*/**","anon");
         //静态资源不拦截
         map.put("/static/**", "anon");
         //对所有用户认证

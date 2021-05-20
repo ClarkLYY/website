@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 public class GlobalExceptionController {
 
     @RequestMapping(value = "/unauthorized/{message}")
-    public Result unauthorized(@PathVariable String message)throws UnsupportedEncodingException{
+    public Result unauthorized(@PathVariable String message){
         return Result.fail(message);
     }
 }

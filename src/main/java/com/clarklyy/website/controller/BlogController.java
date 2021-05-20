@@ -9,6 +9,8 @@ import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.domain.entity.User;
 import com.clarklyy.website.domain.vo.BlogsVo;
 import com.clarklyy.website.service.BlogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.validation.annotation.Validated;
@@ -19,12 +21,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Api(tags = "BlogController", description = "博客接口")
 @RestController
 public class BlogController {
 
     @Resource
     BlogService blogService;
 
+    @ApiOperation("获取博客列表")
     @GetMapping("/blogs")
     public Result blogs(@RequestParam(defaultValue = "1", value = "pageNo") Integer pageNo, @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
         BlogsVo blogsVo = new BlogsVo();
@@ -33,6 +37,7 @@ public class BlogController {
         return Result.success(blogsVo);
     }
 
+    @ApiOperation("获取单个博客")
     @GetMapping("/blog/{id}")
     public Result blog(@PathVariable Integer id){
         Blog blog = blogService.selectBlogById(id);
@@ -42,6 +47,7 @@ public class BlogController {
         return Result.success(blog);
     }
 
+    @ApiOperation("编辑、新建博客")
     @RequiresAuthentication
     @PostMapping("/blog/edit")
     public Result edit(@Validated @RequestBody Blog blog){
