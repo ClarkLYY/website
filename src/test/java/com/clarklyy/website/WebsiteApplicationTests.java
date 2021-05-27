@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootTest
@@ -66,4 +68,25 @@ class WebsiteApplicationTests {
             System.out.println(list.get(i).toString());
         }
     }
+
+    @Test
+    void test(){
+        Top top = new Top();
+        top.id=1;
+        List<Top> list = new ArrayList<>();
+        list.add(top);
+        LList llist = new LList();
+        llist.list = list;
+        llist.list = Collections.singletonList(llist.list.get(0));
+        System.out.println(llist.list.get(0).id);
+    }
+
+    private class LList{
+        List<Top> list;
+
+    }
+    public class Top{
+        int id;
+    }
+
 }

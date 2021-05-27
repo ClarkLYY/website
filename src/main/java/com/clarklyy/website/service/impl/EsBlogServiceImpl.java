@@ -24,6 +24,7 @@ public class EsBlogServiceImpl implements EsBlogService {
     @Override
     public Integer importAll() {
         List<Blog> blogList = blogMapper.selectByPage(0,99999);
+        esBlogRepository.deleteAll();
         esBlogRepository.saveAll(blogList);
         return blogList.size();
     }
@@ -38,6 +39,13 @@ public class EsBlogServiceImpl implements EsBlogService {
     public Page<Blog> search(String title, Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         return esBlogRepository.findByTitle(title, pageable);
+    }
+
+    @Override
+    public Page<Blog> searchDefault(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+        return esBlogRepository.findAll(pageable);
+
     }
 
     @Override

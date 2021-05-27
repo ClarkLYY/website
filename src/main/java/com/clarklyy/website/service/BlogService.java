@@ -11,4 +11,6 @@ public interface BlogService {
     List<Blog> selectBlogByPage(Integer pageNo, Integer pageSize);
 
     void saveOrUpdate(Blog blog);
+
+    Integer deleteBlog(Integer id);
 }

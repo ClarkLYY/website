@@ -39,4 +39,13 @@ public class BlogServiceImpl implements BlogService {
             blogMapper.insert(blog);
         }
     }
+
+    @Override
+    public Integer deleteBlog(Integer id) {
+        if(blogMapper.selectByPrimaryKey(id)!=null){
+            blogMapper.deleteByPrimaryKey(id);
+            return 0;
+        }
+        return 1;
+    }
 }

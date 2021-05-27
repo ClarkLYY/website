@@ -9,6 +9,7 @@ import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.domain.entity.User;
 import com.clarklyy.website.domain.vo.BlogsVo;
 import com.clarklyy.website.service.BlogService;
+import com.clarklyy.website.service.EsBlogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -28,6 +29,9 @@ public class BlogController {
     @Resource
     BlogService blogService;
 
+    @Resource
+    EsBlogService esBlogService;
+
     @ApiOperation("获取博客列表")
     @GetMapping("/blogs")
     public Result blogs(@RequestParam(defaultValue = "1", value = "pageNo") Integer pageNo, @RequestParam(defaultValue = "5", value = "pageSize") Integer pageSize){
@@ -45,6 +49,17 @@ public class BlogController {
             return Result.fail("Blog 不存在!");
         }
         return Result.success(blog);
+    }
+
+    @ApiOperation("删除博客")
+    @PostMapping("/blog/delete/{id}")
+    public Result deleteBlog(@PathVariable Integer id){
+        Integer result = blogService.deleteBlog(id);
+        esBlogService.importAll();
+        if(result!=0){
+            return Result.fail("删除失败或博客不存在");
+        }
+        return Result.success("删除成功");
     }
 
     @ApiOperation("编辑、新建博客")
@@ -70,6 +85,7 @@ public class BlogController {
         temp.setCreated(new Date());
         BeanUtil.copyProperties(blog, temp, "id", "userId", "created", "status");
         blogService.saveOrUpdate(temp);
+        esBlogService.importAll();
         return Result.success(null);
     }
 

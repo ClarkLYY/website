@@ -25,6 +25,7 @@ public interface EsBlogService {
      */
     Page<Blog> search(String title, Integer pageNum, Integer pageSize);
 
+    Page<Blog> searchDefault(Integer pageNum, Integer pageSize);
     /**
      * 同步单个数据
      * @param id

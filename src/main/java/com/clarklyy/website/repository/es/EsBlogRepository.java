@@ -11,4 +11,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 public interface EsBlogRepository extends ElasticsearchRepository<Blog,Integer> {
     Page<Blog> findByTitle(String title, Pageable page);
 
+
 }
