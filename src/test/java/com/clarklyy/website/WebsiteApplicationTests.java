@@ -61,9 +61,8 @@ class WebsiteApplicationTests {
     @Test
     void esBlogTest(){
 //        esBlogService.create(7);
-        Page<Blog> blogPage = esBlogService.search("111",0,5);
+        List<Blog> list = esBlogService.search("111",0,5);
         log.debug("aa啊啊啊");
-        List<Blog> list = blogPage.getContent();
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).toString());
         }

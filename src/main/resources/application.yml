@@ -46,6 +46,7 @@ management:
         include: "*"
 
 clark:
+  serverURL: localhost
   jwt:
     secret: 12312414123123
     expire: 604800

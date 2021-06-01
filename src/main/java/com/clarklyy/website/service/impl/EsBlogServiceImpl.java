@@ -4,7 +4,6 @@ import com.clarklyy.website.domain.entity.Blog;
 import com.clarklyy.website.repository.es.EsBlogRepository;
 import com.clarklyy.website.repository.mapper.BlogMapper;
 import com.clarklyy.website.service.EsBlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EsBlogServiceImpl implements EsBlogService {
@@ -36,15 +36,18 @@ public class EsBlogServiceImpl implements EsBlogService {
     }
 
     @Override
-    public Page<Blog> search(String title, Integer pageNum, Integer pageSize) {
+    public List<Blog> search(String title, Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
-        return esBlogRepository.findByTitle(title, pageable);
+        Page<Blog> page = esBlogRepository.findByTitle(title, pageable);
+        return page.stream().sorted((b1,b2)->b2.getCreated().compareTo(b1.getCreated())).collect(Collectors.toList());
     }
 
     @Override
-    public Page<Blog> searchDefault(Integer pageNum, Integer pageSize) {
+    public List<Blog> searchDefault(Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
-        return esBlogRepository.findAll(pageable);
+        Page<Blog> page = esBlogRepository.findAll(pageable);
+        return page.stream().sorted((b1,b2)->b2.getCreated().compareTo(b1.getCreated())).collect(Collectors.toList());
+
 
     }
 

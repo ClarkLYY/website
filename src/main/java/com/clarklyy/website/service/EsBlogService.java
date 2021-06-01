@@ -1,7 +1,8 @@
 package com.clarklyy.website.service;
 
 import com.clarklyy.website.domain.entity.Blog;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface EsBlogService {
     /**
@@ -23,9 +24,15 @@ public interface EsBlogService {
      * @param title,pageNum,pageSize
      * @return Page<Blog>
      */
-    Page<Blog> search(String title, Integer pageNum, Integer pageSize);
+    List<Blog> search(String title, Integer pageNum, Integer pageSize);
 
-    Page<Blog> searchDefault(Integer pageNum, Integer pageSize);
+    /**
+     * 返回所有es数据
+     * @param pageNum,pageSize
+     * @return Page<Blog>
+     */
+    List<Blog> searchDefault(Integer pageNum, Integer pageSize);
+
     /**
      * 同步单个数据
      * @param id
