@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+    - 80:80
+    volumes:
+    - /root/nginx/html:/usr/share/nginx/html
+    - /root/nginx/nginx.conf:/etc/nginx/nginx.conf
+    privileged: true
+  mysql:
+    image: mysql:5.7.27
+    ports:
+    - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootroot
+  website:
+    image: website:latest
+    build: .
+    ports:
+    - 6666:7777

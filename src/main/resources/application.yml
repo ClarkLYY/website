@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.135.34.35:3306/clark_database?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: clark
+    url: jdbc:mysql://1.117.221.165:3306/clark_database?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
     password: rootroot
 
   main:
@@ -46,7 +46,7 @@ management:
         include: "*"
 
 clark:
-  serverURL: localhost
+  serverURL: 1.117.221.165
   jwt:
     secret: 12312414123123
     expire: 604800
