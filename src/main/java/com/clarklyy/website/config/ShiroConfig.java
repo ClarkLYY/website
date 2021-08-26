@@ -56,7 +56,6 @@ public class ShiroConfig {
         //对所有用户认证
         map.put("/**","jwt");
 
-
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

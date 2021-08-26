@@ -1,24 +1,20 @@
 package com.clarklyy.website.repository.mapper;
 
 import com.clarklyy.website.domain.entity.Blog;
-import org.apache.ibatis.annotations.Param;
+import com.clarklyy.website.domain.vo.BlogVo;
 
 import java.util.List;
 
 public interface BlogMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer blogId);
 
     int insert(Blog record);
 
-    int insertSelective(Blog record);
+    BlogVo selectByPrimaryKey(Integer blogId);
 
-    Blog selectByPrimaryKey(Integer id);
+    int updateByPrimary(Blog record);
 
-    int updateByPrimaryKeySelective(Blog record);
+    List<BlogVo> selectAllBlog();
 
-    int updateByPrimaryKeyWithBLOBs(Blog record);
-
-    int updateByPrimaryKey(Blog record);
-
-    List<Blog> selectByPage(@Param("pageNo") Integer pageNo, @Param("pageSize")Integer pageSize);
+    List<BlogVo> selectByTypeId(Integer typeId);
 }

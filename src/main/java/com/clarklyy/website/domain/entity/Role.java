@@ -1,5 +1,8 @@
 package com.clarklyy.website.domain.entity;
 
+import lombok.Data;
+
+@Data
 public class Role {
     private Long roleId;
 

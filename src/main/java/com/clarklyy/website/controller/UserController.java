@@ -83,7 +83,7 @@ public class UserController {
         return Result.success(MapUtil.builder()
                         .put("id", user.getUserId())
                         .put("userEmail", user.getUserEmail())
-                        .put("avatar", user.getSalt())
+                        .put("avatar", user.getAvatar())
                         .put("userNickName", user.getUserNickname())
                         .map());
     }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clarklyy.website.repository.mapper.TagMapper">
+  <resultMap id="BaseResultMap" type="com.clarklyy.website.domain.entity.Tag">
+    <id column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <result column="tag_count" jdbcType="INTEGER" property="tagCount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tag_id, tag_name, tag_count
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from table_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.Tag">
+    insert into table_tag (tag_id, tag_name, tag_count
+      )
+    values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.clarklyy.website.domain.entity.Tag">
+    insert into table_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        tag_id,
+      </if>
+      <if test="tagName != null">
+        tag_name,
+      </if>
+      <if test="tagCount != null">
+        tag_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagCount != null">
+        #{tagCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clarklyy.website.domain.entity.Tag">
+    update table_tag
+    <set>
+      <if test="tagName != null">
+        tag_name = #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagCount != null">
+        tag_count = #{tagCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clarklyy.website.domain.entity.Tag">
+    update table_tag
+    set tag_name = #{tagName,jdbcType=VARCHAR},
+      tag_count = #{tagCount,jdbcType=INTEGER}
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllTag" parameterType="java.lang.Integer" resultType="com.clarklyy.website.domain.entity.Tag" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_tag
+  </select>
+
+  <select id="selectTagByPage" parameterType="java.lang.Integer" resultType="com.clarklyy.website.domain.entity.Tag" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_tag
+  </select>
+
+</mapper>

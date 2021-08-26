@@ -2,22 +2,16 @@ package com.clarklyy.website.domain.entity;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
-
 
 @Data
 public class User {
     private Integer userId;
 
-    @NotBlank(message = "名称不能为空")
     private String userNickname;
 
     private String userPassword;
 
-    @NotBlank(message = "邮箱不能为空")
-    @Email(message = "邮箱格式不正确")
     private String userEmail;
 
     private Integer actiStatus;
@@ -27,6 +21,8 @@ public class User {
     private String salt;
 
     private Date tokenExptime;
+
+    private String avatar;
 
     public Integer getUserId() {
         return userId;
@@ -90,5 +86,13 @@ public class User {
 
     public void setTokenExptime(Date tokenExptime) {
         this.tokenExptime = tokenExptime;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 }

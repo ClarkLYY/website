@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -28,7 +29,8 @@ public class ImageController {
             return Result.fail("上传图片为空");
         }
         String fileName = file.getOriginalFilename();
-
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+        fileName = UUID.randomUUID() + suffixName; // 新文件名
         ApplicationHome home = new ApplicationHome(getClass());
         String path = home.getSource().getParentFile().toString() + "/image";
         System.out.println(path);

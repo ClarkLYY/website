@@ -1,16 +1,20 @@
 package com.clarklyy.website.service;
 
 import com.clarklyy.website.domain.entity.Blog;
-
-import java.util.List;
+import com.clarklyy.website.domain.vo.BlogVo;
+import com.github.pagehelper.PageInfo;
 
 public interface BlogService {
 
-    Blog selectBlogById(Integer id);
+    BlogVo selectBlogById(Integer id);
 
-    List<Blog> selectBlogByPage(Integer pageNo, Integer pageSize);
+    PageInfo<BlogVo> getBlogByPage(Integer pageNo, Integer pageSize);
 
-    void saveOrUpdate(Blog blog);
+    void saveOrUpdate(BlogVo blogVo);
 
     Integer deleteBlog(Integer id);
+
+    PageInfo<BlogVo> getBlogByTypeId(Integer pageNo, Integer pageSize, Integer typeId);
+
+    PageInfo<Blog> getBlogByTagId(Integer pageNo, Integer pageSize, Integer tagId);
 }

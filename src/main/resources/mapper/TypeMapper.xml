@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clarklyy.website.repository.mapper.TypeMapper">
+  <resultMap id="BaseResultMap" type="com.clarklyy.website.domain.entity.Type">
+    <id column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="type_count" jdbcType="INTEGER" property="typeCount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    type_id, type_name, type_count
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from table_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.Type">
+    insert into table_type (type_id, type_name, type_count)
+    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.clarklyy.website.domain.entity.Type">
+    insert into table_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="typeName != null">
+        type_name,
+      </if>
+      <if test="typeCount != null">
+        type_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCount != null">
+        #{typeCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clarklyy.website.domain.entity.Type">
+    update table_type
+    <set>
+      <if test="typeName != null">
+        name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCount != null">
+        name = #{typeCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clarklyy.website.domain.entity.Type">
+    update table_type
+    set type_name = #{typeName,jdbcType=VARCHAR},
+        type_count = #{typeCount,jdbcType=INTEGER}
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllType" resultType="com.clarklyy.website.domain.entity.Type" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_type
+  </select>
+
+  <select id="selectTypeByPage" resultType="com.clarklyy.website.domain.entity.Type" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_type
+  </select>
+</mapper>

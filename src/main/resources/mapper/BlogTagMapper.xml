@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clarklyy.website.repository.mapper.BlogTagMapper">
+  <resultMap id="BaseResultMap" type="com.clarklyy.website.domain.entity.BlogTag">
+    <id column="blog_tag_id" jdbcType="INTEGER" property="blogTagId" />
+    <result column="blog_id" jdbcType="INTEGER" property="blogId" />
+    <result column="tag_id" jdbcType="INTEGER" property="tagId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    blog_tag_id, blog_id, tag_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_blog_tag
+    where blog_tag_id = #{blogTagId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByBlogId" parameterType="java.lang.Integer">
+    delete from table_blog_tag
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.BlogTag">
+    insert into table_blog_tag (blog_tag_id, blog_id, tag_id
+      )
+    values (#{blogTagId,jdbcType=INTEGER}, #{blogId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.clarklyy.website.domain.entity.BlogTag">
+    insert into table_blog_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blogTagId != null">
+        blog_tag_id,
+      </if>
+      <if test="blogId != null">
+        blog_id,
+      </if>
+      <if test="tagId != null">
+        tag_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blogTagId != null">
+        #{blogTagId,jdbcType=INTEGER},
+      </if>
+      <if test="blogId != null">
+        #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clarklyy.website.domain.entity.BlogTag">
+    update table_blog_tag
+    <set>
+      <if test="blogId != null">
+        blog_id = #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="tagId != null">
+        tag_id = #{tagId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where blog_tag_id = #{blogTagId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clarklyy.website.domain.entity.BlogTag">
+    update table_blog_tag
+    set blog_id = #{blogId,jdbcType=INTEGER},
+      tag_id = #{tagId,jdbcType=INTEGER}
+    where blog_tag_id = #{blogTagId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByTagId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_blog_tag
+    <where>
+      and tag_id = #{tagId,jdbcType=INTEGER}
+    </where>
+  </select>
+
+  <select id="selectByBlogId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+        tag_id
+    from table_blog_tag
+    <where>
+      and blog_id = #{blogId,jdbcType=INTEGER}
+    </where>
+  </select>
+</mapper>

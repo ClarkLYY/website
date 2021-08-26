@@ -10,10 +10,11 @@
     <result column="acti_code" jdbcType="VARCHAR" property="actiCode" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="token_exptime" jdbcType="TIMESTAMP" property="tokenExptime" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, user_nickname, user_password, user_email, acti_status, acti_code, salt, 
-    token_exptime
+    token_exptime, avatar
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,23 +22,19 @@
     from table_user
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
-  <select id="selectByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from table_user
-    where user_email = #{userEmail,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from table_user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="com.clarklyy.website.domain.entity.User">
+  <insert id="insert" parameterType="com.clarklyy.website.domain.entity.User">
     insert into table_user (user_id, user_nickname, user_password, 
-      user_email, acti_code,
-      salt )
+      user_email, acti_status, acti_code, 
+      salt, token_exptime, avatar
+      )
     values (#{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
-      #{userEmail,jdbcType=VARCHAR}, #{actiCode,jdbcType=VARCHAR},
-      #{salt,jdbcType=VARCHAR})
+      #{userEmail,jdbcType=VARCHAR}, #{actiStatus,jdbcType=INTEGER}, #{actiCode,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{tokenExptime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.clarklyy.website.domain.entity.User">
     insert into table_user
@@ -66,6 +63,9 @@
       <if test="tokenExptime != null">
         token_exptime,
       </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -91,6 +91,9 @@
       </if>
       <if test="tokenExptime != null">
         #{tokenExptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -118,6 +121,9 @@
       <if test="tokenExptime != null">
         token_exptime = #{tokenExptime,jdbcType=TIMESTAMP},
       </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -129,7 +135,14 @@
       acti_status = #{actiStatus,jdbcType=INTEGER},
       acti_code = #{actiCode,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
-      token_exptime = #{tokenExptime,jdbcType=TIMESTAMP}
+      token_exptime = #{tokenExptime,jdbcType=TIMESTAMP},
+      avatar = #{avatar,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  <select id="selectByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from table_user
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
 </mapper>
