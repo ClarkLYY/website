@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.clarklyy</groupId>
     <artifactId>website</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>website</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.35</version>
+            <version>1.2.61</version>
         </dependency>
 
         <dependency>
